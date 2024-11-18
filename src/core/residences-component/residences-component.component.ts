@@ -10,8 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ResidencesComponentComponent {
   constructor(private snackBar: MatSnackBar) {}
 
-  visibilityTable: boolean[] = [false, false, false, false];
-  showOrHide: string[] = ['Show', 'Show', 'Show', 'Show'];
+  visibilityTable: boolean[] = [false, false, false, false,false];
 
   listResidences: Residence[] = [
     {
@@ -36,15 +35,26 @@ export class ResidencesComponentComponent {
       status: 'Vendu',
     },
     {
+      id: 3,
+      name: 'El Arij',
+      address: 'Rades',
+      image: '../../assets/images/Image_13.jpg',
+      status: 'Vendu',
+    },
+    {
       id: 4,
       name: 'El Anber',
       address: 'inconnu',
-      image: '../../assets/images/Image_17.jpg',
+      image: '../../assets/images/Image_6.jpg',
       status: 'En Construction',
     },
   ];
 
   listFavorite: number[] = [];
+
+  searchTerm: string = '';
+
+
 
   showAddress(index: number) {
     if (this.listResidences[index].address === 'inconnu')
@@ -55,27 +65,29 @@ export class ResidencesComponentComponent {
         panelClass: ['error-snackbar'],
       });
     else this.visibilityTable[index] = !this.visibilityTable[index];
-    this.showOrHide[index] = this.visibilityTable[index] ? 'Hide' : 'Show';
   }
-  searchTerm: string = '';
+
+
+
 
   filteredResidences() {
     if (!this.searchTerm) {
       return this.listResidences;
     }
-    return this.listResidences.filter((res) => res.address.toLowerCase() === this.searchTerm.toLowerCase());
+    
+    const regex = new RegExp('^'+this.searchTerm, "i"); 
+    return this.listResidences.filter((res) => regex.test(res.address));
   }
 
-  addFavorite(index: number) {
+  favorite(index: number) {
     this.listFavorite.push(index);
     this.snackBar.open(
       this.listResidences[index].name + ' was added to the list!',
       'Close',
       {
-        duration: 30000000000000,
+        duration: 3000,
         verticalPosition: 'top',
         horizontalPosition: 'center',
-        // panelClass: ['custom-snackbar'],
         panelClass: ['success-snackbar'],
       }
     );

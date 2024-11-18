@@ -1,52 +1,79 @@
 <div class="p-6 bg-gray-100 min-h-screen">
   <h1 class="text-3xl font-bold text-center text-blue-600 mb-8">Residences</h1>
-  
+
   <!-- Search Bar -->
   <div class="mb-6 flex justify-center">
     <input
       type="text"
       [(ngModel)]="searchTerm"
       class="p-2 w-full max-w-xs border border-gray-300 rounded-lg"
-      placeholder="Search by name or address..."
+      placeholder="Search by address..."
     />
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div 
-      *ngFor="let residence of filteredResidences(); let i = index" 
+    <div
+      *ngFor="let residence of filteredResidences(); let i = index"
       class="bg-white shadow-lg rounded-lg overflow-hidden hover:scale-105 transform transition duration-300"
     >
-      <img [src]="residence.image" [alt]="residence.name" class="w-full h-48 object-cover">
-      
+      <div class="relative w-full h-48">
+        <img
+          [src]="residence.image"
+          [alt]="residence.name"
+          class="w-full h-48 object-contain"
+        />
+      </div>
+
       <div class="p-4">
-        <h2 class="text-xl font-bold text-gray-800 mb-2">{{ residence.name }}</h2>
-        <p *ngIf="visibilityTable[i]" class="text-gray-600"><strong>Address:</strong> {{ residence.address }}</p>
-        <p class="text-gray-600"><strong>Status:</strong> 
-          <span 
+        <h2 class="text-xl font-bold text-gray-800 mb-2">
+          {{ residence.name }}
+        </h2>
+        <p *ngIf="visibilityTable[i]" class="text-gray-600">
+          <strong>Address:</strong> {{ residence.address }}
+        </p>
+        <p class="text-gray-600">
+          <strong>Status:</strong>
+          <span
             [ngClass]="{
               'text-green-600 font-semibold': residence.status === 'Disponible',
-              'text-yellow-500 font-semibold': residence.status === 'En Construction',
+              'text-yellow-500 font-semibold':
+                residence.status === 'En Construction',
               'text-red-600 font-semibold': residence.status === 'Vendu'
             }"
           >
             {{ residence.status }}
-            <i *ngIf="residence.status === 'Disponible'" class="fa-regular fa-circle-check"></i>
-            <i *ngIf="residence.status === 'En Construction'" class="fa-solid fa-hourglass-half"></i>
-            <i *ngIf="residence.status === 'Vendu'" class="fa-regular fa-circle-xmark"></i>
+            <i
+              *ngIf="residence.status === 'Disponible'"
+              class="fa-regular fa-circle-check"
+            ></i>
+            <i
+              *ngIf="residence.status === 'En Construction'"
+              class="fa-solid fa-hourglass-half"
+            ></i>
+            <i
+              *ngIf="residence.status === 'Vendu'"
+              class="fa-regular fa-circle-xmark"
+            ></i>
           </span>
         </p>
-        <div class="flex items-center justify-center items-center space-x-4 ">
-          <button 
-            class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        <div class="flex items-center justify-center items-center space-x-1">
+          <button
+            class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded me-4"
             (click)="showAddress(i)"
           >
-            {{showOrHide[i]}} Location
+            {{ visibilityTable[i] ? "Hide" : "Show" }} Location
           </button>
-          <button 
+          <button
             class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            (click)="addFavorite(i)"
+            (click)="favorite(i)"
           >
-            <i class="fa-regular fa-thumbs-up"></i> 
+            <i class="fa-regular fa-thumbs-up"></i>
+          </button>
+          <button
+            class="mt-2 bg-red-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            (click)="favorite(i)"
+          >
+            <i class="fa-regular fa-thumbs-down"></i>
           </button>
         </div>
       </div>
