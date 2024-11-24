@@ -1,0 +1,52 @@
+<header class="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-4 shadow-md sticky top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center px-4">
+      <!-- Logo or Title -->
+      <h1 class="text-2xl font-extrabold tracking-wide">
+        <a href="#" class="hover:text-blue-200 transition duration-200">Residences App</a>
+      </h1>
+  
+      <!-- Navigation Menu -->
+      <nav class="hidden md:block">
+        <ul class="flex space-x-6">
+          <li>
+            <a href="#" class="hover:text-blue-300 font-medium transition duration-200">Home</a>
+          </li>
+          <li>
+            <a href="#" class="hover:text-blue-300 font-medium transition duration-200">Residences</a>
+          </li>
+        </ul>
+      </nav>
+  
+      <!-- Mobile Menu Button -->
+      <button
+        class="block md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-white"
+        (click)="toggleMenu()"
+        aria-label="Toggle navigation menu"
+      >
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+  
+    <!-- Mobile Dropdown Menu -->
+    <div
+      *ngIf="isMenuOpen"
+      class="bg-blue-600 md:hidden mt-2 space-y-2 p-4 rounded shadow-md"
+    >
+      <a
+        href="#"
+        class="block text-white hover:bg-blue-700 rounded px-4 py-2 transition duration-200"
+        >Home</a
+      >
+      <a
+        href="#"
+        class="block text-white hover:bg-blue-700 rounded px-4 py-2 transition duration-200"
+        >About</a
+      >
+      <a
+        href="#"
+        class="block text-white hover:bg-blue-700 rounded px-4 py-2 transition duration-200"
+        >Contact</a
+      >
+    </div>
+  </header>
+  

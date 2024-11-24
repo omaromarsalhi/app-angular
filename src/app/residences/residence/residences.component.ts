@@ -1,16 +1,35 @@
 import { Component } from '@angular/core';
-import { Residence } from '../models/Residence';
+import { Residence } from '../../../core/models/Residence';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-residences-component',
-  templateUrl: './residences-component.component.html',
-  styleUrls: ['./residences-component.component.css'],
+  templateUrl: './residences.component.html',
+  styleUrls: ['./residences.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({ opacity: 0 })), 
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms ease-in', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('300ms ease-out', style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
-export class ResidencesComponentComponent {
+export class ResidencesComponent {
   constructor(private snackBar: MatSnackBar) {}
 
-  visibilityTable: boolean[] = [false, false, false, false,false];
+  visibilityTable: boolean[] = [false, false, false, false, false];
 
   listResidences: Residence[] = [
     {
@@ -54,8 +73,6 @@ export class ResidencesComponentComponent {
 
   searchTerm: string = '';
 
-
-
   showAddress(index: number) {
     if (this.listResidences[index].address === 'inconnu')
       this.snackBar.open('inconnue alert!', 'Close', {
@@ -67,15 +84,12 @@ export class ResidencesComponentComponent {
     else this.visibilityTable[index] = !this.visibilityTable[index];
   }
 
-
-
-
   filteredResidences() {
     if (!this.searchTerm) {
       return this.listResidences;
     }
-    
-    const regex = new RegExp('^'+this.searchTerm, "i"); 
+
+    const regex = new RegExp('^' + this.searchTerm, 'i');
     return this.listResidences.filter((res) => regex.test(res.address));
   }
 
