@@ -30,7 +30,7 @@ export class ResidencesComponent {
   constructor(private snackBar: MatSnackBar) {}
 
   visibilityTable: boolean[] = [false, false, false, false, false];
-
+  modalOpen = false;
   listResidences: Residence[] = [
     {
       id: 1,
@@ -106,4 +106,21 @@ export class ResidencesComponent {
       }
     );
   }
+
+
+  openModal() {
+    this.modalOpen = true;
+  }
+
+  closeModal() {
+    this.modalOpen = false;
+  }
+
+  addResidence(newResidence: Residence) {
+    newResidence.id = this.listResidences.length + 1; // You could implement a better ID strategylo
+    console.log(newResidence)
+    this.listResidences.push(newResidence);
+  }
+
+
 }
